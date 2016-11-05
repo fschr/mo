@@ -16,7 +16,7 @@ PRs are welcome.
 
 ## Probability and Statistics
 
-1. (13)(48) / (52 choose 5)
+### 1. (13)(48) / (52 choose 5)
 
 There are (52 choose 5) distinct poker hands (without regard to order). To obtain four of a kind,
 
@@ -26,7 +26,7 @@ There are (52 choose 5) distinct poker hands (without regard to order). To obtai
 
 Thus *p* = (13)(48) / (52 choose 5)
 
-2. 2/3
+### 2. 2/3
 
 There are (3 choose 2) ways to choose two non-empty boxes. Now select which box of those two to contain just one (rather than two) balls. Thus *p* = (2) / (3 choose 2) = 2/3
 
