@@ -20,6 +20,6 @@ There are (52 choose 5) distinct poker hands (without regard to order). To obtai
 
 (b) choose the fifth card (52 - 4 = 48 remaing cards to choose from)
 
-Thus *P* = (13)(48) / (52 choose 5)
+Thus *p* = (13)(48) / (52 choose 5)
 
 ## Algorithms and Data Structures
