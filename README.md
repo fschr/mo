@@ -56,6 +56,8 @@ It is possible to generalize this problem to all 4 suits. There are 4 different 
 
 ### 4.
 
+0.432
+
 This is a simple Bernoulli problem. Let *A* be the probability that the first digit > 5. *A* = 4/10 * (6/10) * (6/10) = 0.144. (The first digit could be 6, 7, 8, or 9 and the remaining two digits could each be 0-5). The probability that the second digit > 5 is independent of A. Similarly, this extends to the third digit. So there are 3 ways---3 digits, choose 1---each with probability 0.144 that a single digit is > 5. Thus *p* =  3 * 0.144 = 0.432.
 
 ## Algorithms and Data Structures
