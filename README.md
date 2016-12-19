@@ -1,3 +1,6 @@
+## Status
+[![Build Status](https://travis-ci.org/fschr/mo.png)](https://travis-ci.org/fschr/mo)
+
 # Math Problems
 This repostiory contains a bunch of math problems and their solutions in plain English. I will try to include the source for each problem. Sources might be erroneous or not original.
 
