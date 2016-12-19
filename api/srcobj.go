@@ -17,7 +17,6 @@ package api
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"path/filepath"
 
 	log "github.com/sirupsen/logrus"
@@ -49,9 +48,6 @@ func readMetadata(path string) (m *metadata, err error) {
 func readSubObj(path, ext string) (s *subObj, err error) {
 	srcLoader := func(basename string) (src string, err error) {
 		fullpath := filepath.Join(path, basename)
-		if _, err := os.Stat(fullpath); os.IsNotExist(err) {
-			return "", err
-		}
 		buf, err := ioutil.ReadFile(fullpath)
 		if err != nil {
 			return "", err

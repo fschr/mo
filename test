@@ -1,0 +1,2 @@
+#!/bin/sh
+go test -v `go list ./... | grep -v github.com/fschr/mo/cmd | grep -v github.com/fschr/mo\$`
