@@ -20,6 +20,7 @@ import (
 	"path/filepath"
 
 	log "github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
 )
 
 var exts = [...]string{".txt", ".tex"}
@@ -41,8 +42,19 @@ type subObj struct {
 }
 
 func readMetadata(path string) (m *metadata, err error) {
-	// metadata.yaml
-	return nil, nil
+	t := struct {
+		Title string
+		Tags  []string
+	}{}
+
+	buf, err := ioutil.ReadFile(filepath.Join(path, "metadata.yml"))
+	if err != nil {
+		return nil, err
+	}
+	if err := yaml.Unmarshal(buf, &t); err != nil {
+		return nil, err
+	}
+	return &metadata{title: t.Title, tags: t.Tags}, nil
 }
 
 func readSubObj(path, ext string) (s *subObj, err error) {
@@ -94,6 +106,6 @@ func (s *srcObj) String() string {
 }
 
 func (s *srcObj) toPDF(outDir, texCompiler string) error {
-	fmt.Printf("generated PDF in %v using %v\n", outDir, texCompiler)
+	fmt.Printf("%v: generated PDF in %v using %v\n", s, outDir, texCompiler)
 	return nil
 }

@@ -29,7 +29,7 @@ func PDF(db, outDir, texCompiler string) {
 		log.WithFields(log.Fields{
 			"db":     db,
 			"outDir": outDir,
-		}).Fatal("no problem directories found!")
+		}).Fatal("no source directories found!")
 	}
 	for _, p := range paths {
 		s, err := readSrcObj(p)
@@ -46,7 +46,5 @@ func PDF(db, outDir, texCompiler string) {
 			}).Warn("failed to compile source object to PDF")
 			log.Fatal(err)
 		}
-		log.WithFields(log.Fields{"source object": s}).Info("compiled to PDF")
 	}
-	log.Info("successfully completed api.PDF call")
 }

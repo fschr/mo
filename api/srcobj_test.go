@@ -24,14 +24,18 @@ func TestReadSubObj(t *testing.T) {
 		expectedErr error
 	}{
 		{
-			path: "testdb/0001", ext: ".txt", expected: subObj{
+			path: "testdb/0001",
+			ext:  ".txt",
+			expected: subObj{
 				problemSrc:  "test problem.txt text\n",
 				solutionSrc: "test solution.txt text\n",
 			},
 			expectedErr: nil,
 		},
 		{
-			path: "testdb/0001", ext: ".tex", expected: subObj{
+			path: "testdb/0001",
+			ext:  ".tex",
+			expected: subObj{
 				problemSrc:  "test problem.tex tex\n",
 				solutionSrc: "test solution.tex tex\n",
 			},
@@ -45,6 +49,44 @@ func TestReadSubObj(t *testing.T) {
 		}
 		if *got != tc.expected {
 			t.Errorf("%v: expected %v, got %v", i, tc.expected, got)
+		}
+	}
+}
+
+func TestReadMetadata(t *testing.T) {
+	testcases := []struct {
+		path        string
+		expected    metadata
+		expectedErr error
+	}{
+		{
+			path: "testdb/0001",
+			expected: metadata{
+				title: "Test Title",
+				tags: []string{
+					"test tag 1",
+					"test tag 2",
+					"test tag 3",
+				},
+			},
+			expectedErr: nil,
+		},
+	}
+	for i, tc := range testcases {
+		got, err := readMetadata(tc.path)
+		if err != tc.expectedErr {
+			t.Errorf("%v: expected err %v, got err %v", i, tc.expectedErr, err)
+		}
+		if got.title != tc.expected.title {
+			t.Errorf("%v: expected %v, got %v", i, tc.expected.title, got.title)
+		}
+		if len(got.tags) != len(tc.expected.tags) {
+			t.Errorf("%v: expected %v, got %v", i, tc.expected.tags, got.tags)
+		}
+		for j, gotTag := range got.tags {
+			if gotTag != tc.expected.tags[j] {
+				t.Errorf("%v: expected %v, got %v", i, tc.expected.tags, got.tags)
+			}
 		}
 	}
 }
