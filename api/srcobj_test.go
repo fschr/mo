@@ -90,3 +90,66 @@ func TestReadMetadata(t *testing.T) {
 		}
 	}
 }
+
+func TestReadSrcObj(t *testing.T) {
+	testcases := []struct {
+		path        string
+		expected    srcObj
+		expectedErr error
+	}{
+		{
+			path: "testdb/0001",
+			expected: srcObj{
+				meta: &metadata{
+					title: "Test Title",
+					tags: []string{
+						"test tag 1",
+						"test tag 2",
+						"test tag 3",
+					},
+				},
+				subObjs: [](*subObj){
+					&subObj{
+						problemSrc:  "test problem.txt text\n",
+						solutionSrc: "test solution.txt text\n",
+					},
+					&subObj{
+						problemSrc:  "test problem.tex tex\n",
+						solutionSrc: "test solution.tex tex\n",
+					},
+				},
+			},
+			expectedErr: nil,
+		},
+	}
+	for i, tc := range testcases {
+		got, err := readSrcObj(tc.path)
+		if err != tc.expectedErr {
+			t.Errorf("%v: expected err %v, got err %v", i, tc.expectedErr, err)
+		}
+		if got.meta.title != tc.expected.meta.title {
+			t.Errorf("%v: expected %v, got %v", i, tc.expected.meta.title, got.meta.title)
+		}
+		if len(got.meta.tags) != len(tc.expected.meta.tags) {
+			t.Errorf("%v: expected %v, got %v", i, tc.expected.meta.tags, got.meta.tags)
+		}
+		for j, gotTag := range got.meta.tags {
+			if gotTag != tc.expected.meta.tags[j] {
+				t.Errorf("%v: expected %v, got %v", i, tc.expected.meta.tags, got.meta.tags)
+			}
+		}
+		if len(got.subObjs) != len(tc.expected.subObjs) {
+			t.Errorf("%v: expected %v, got %v", i, tc.expected.subObjs, got.subObjs)
+		}
+		expectedSet := make(map[subObj]struct{})
+		for _, expectedSubObj := range tc.expected.subObjs {
+			expectedSet[*expectedSubObj] = struct{}{}
+		}
+		for _, gotSubObj := range got.subObjs {
+			_, ok := expectedSet[*gotSubObj]
+			if !ok {
+				t.Errorf("%v: expected %v, got %v", i, tc.expected.subObjs, got.subObjs)
+			}
+		}
+	}
+}
